@@ -1,16 +1,11 @@
+# chatGPT-shell-cli
 
 ![shell](https://user-images.githubusercontent.com/99351112/207697723-a3fabc0b-f067-4f83-96fd-1f7225a0bb38.svg)
-<div align="center">
-<p>
 
 ✨Join the new <a href="https://discord.gg/fwfYAZWKqu">Discord server</a> and start contributing to this project!✨</p>
 
-
-<h1>chatGPT-shell-cli</h1>
-
 A simple, lightweight shell script to use OpenAI's chatGPT and DALL-E from the terminal without installing python or node.js. The script uses the official ChatGPT model `gpt-3.5-turbo` with the OpenAI API endpoint `/chat/completions`. You can also use the new `gpt-4` model, if you have access.  
 The script supports the use of all other OpenAI models with the `completions` endpoint and the `images/generations` endpoint for generating images.
-</div>
 
 ## Features
 
@@ -140,32 +135,35 @@ This script relies on curl for the requests to the api and jq to parse the json 
 
 ### Use the official ChatGPT model
 
-  - The default model used when starting the script is `gpt-3.5-turbo`.
-  
+- The default model used when starting the script is `gpt-3.5-turbo`.
+
 ### Use GPT4
-  - If you have access to the GPT4 model you can use it by setting the model to `gpt-4`, i.e. `chatgpt --model gpt-4`
+
+- If you have access to the GPT4 model you can use it by setting the model to `gpt-4`, i.e. `chatgpt --model gpt-4`
 
 ### Set request parameters
 
-  - To set request parameters you can start the script like this: `chatgpt --temperature 0.9 --model text-babbage:001 --max-tokens 100 --size 1024x1024`
+- To set request parameters you can start the script like this: `chatgpt --temperature 0.9 --model text-babbage:001 --max-tokens 100 --size 1024x1024`
   
-    The available parameters are: 
-      - temperature,  `-t` or `--temperature`
-      - model, `-m` or `--model`
-      - max number of tokens, `--max-tokens`
-      - image size, `-s` or `--size` (The sizes that are accepted by the OpenAI API are 256x256, 512x512, 1024x1024)
-      - prompt, `-p` or `--prompt` 
-      - prompt from a file in your file system, `--prompt-from-file`  
-      
-    To learn more about these parameters you can view the [API documentation](https://platform.openai.com/docs/api-reference/completions/create)
-    
-    
+  The available parameters are: 
+
+  - temperature,  `-t` or `--temperature`
+  - model, `-m` or `--model`
+  - max number of tokens, `--max-tokens`
+  - image size, `-s` or `--size` (The sizes that are accepted by the OpenAI API are 256x256, 512x512, 1024x1024)
+  - prompt, `-p` or `--prompt` 
+  - prompt from a file in your file system, `--prompt-from-file`  
+
+  To learn more about these parameters you can view the [API documentation](https://platform.openai.com/docs/api-reference/completions/create)
+
 ## Contributors
+
 :pray: Thanks to all the people who used, tested, submitted issues, PRs and proposed changes:
 
 [pfr-dev](https://www.github.com/pfr-dev), [jordantrizz](https://www.github.com/jordantrizz), [se7en-x230](https://www.github.com/se7en-x230), [mountaineerbr](https://www.github.com/mountaineerbr), [oligeo](https://www.github.com/oligeo), [biaocy](https://www.github.com/biaocy), [dmd](https://www.github.com/dmd), [goosegit11](https://www.github.com/goosegit11), [dilatedpupils](https://www.github.com/dilatedpupils), [direster](https://www.github.com/direster), [rxaviers](https://www.github.com/rxaviers), [Zeioth](https://www.github.com/Zeioth), [edshamis](https://www.github.com/edshamis), [nre-ableton](https://www.github.com/nre-ableton), [TobiasLaving](https://www.github.com/TobiasLaving), [RexAckermann](https://www.github.com/RexAckermann), [emirkmo](https://www.github.com/emirkmo), [np](https://www.github.com/np), [camAtGitHub](https://github.com/camAtGitHub), [keyboardsage](https://github.com/keyboardsage) [tomas223](https://github.com/tomas223)
 
 ## Contributing
+
 Contributions are very welcome!
 
 If you have ideas or need help to get started join the [Discord server](https://discord.gg/fwfYAZWKqu)

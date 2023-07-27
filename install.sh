@@ -37,7 +37,7 @@ if [[ "$TERM" == "xterm-kitty" ]]; then
 fi
 
 # Installing chatgpt script
-curl -sS https://raw.githubusercontent.com/0xacx/chatGPT-shell-cli/main/chatgpt.sh -o /usr/local/bin/chatgpt
+cp ./chatgpt.sh /usr/local/bin/chatgpt
 
 # Replace open image command with xdg-open for linux systems
 if [[ "$OSTYPE" == "linux"* ]] || [[ "$OSTYPE" == "freebsd"* ]]; then
@@ -46,49 +46,61 @@ fi
 chmod +x /usr/local/bin/chatgpt
 echo "Installed chatgpt script to /usr/local/bin/chatgpt"
 
-echo "The script will add the OPENAI_KEY environment variable to your shell profile and add /usr/local/bin to your PATH"
+# Command to get the home directory of the user running the script behind sudo
+HOME_USER=$(getent passwd $SUDO_USER | cut -d: -f6)
+
+echo "The script will add the OPENAI_API_KEY environment variable to your shell profile and add /usr/local/bin to your PATH"
 echo "Would you like to continue? (Yes/No)"
 read -e answer
 if [ "$answer" == "Yes" ] || [ "$answer" == "yes" ] || [ "$answer" == "y" ] || [ "$answer" == "Y" ] || [ "$answer" == "ok" ]; then
 
   read -p "Please enter your OpenAI API key: " key
+  read -p "Please enter the URI to open (leave empty for default OpenAI API key): " uri
+  if [ "$uri" == "" ]; then
+    uri="https://api.openai.com"
+    echo "URI not specified, using default: " $uri
+  fi
 
   # Adding OpenAI key to shell profile
   # zsh profile
-  if [ -f ~/.zprofile ]; then
-    echo "export OPENAI_KEY=$key" >>~/.zprofile
+  if [ -f $HOME_USER/.zprofile ]; then
+    echo "export OPENAI_API_KEY=$key" >>$HOME_USER/.zprofile
+    echo "export OPENAI_API_URI=$uri" >>$HOME_USER/.zprofile
     if [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
-      echo 'export PATH=$PATH:/usr/local/bin' >>~/.zprofile
+      echo 'export PATH=$PATH:/usr/local/bin' >>$HOME_USER/.zprofile
     fi
-    echo "OpenAI key and chatgpt path added to ~/.zprofile"
-    source ~/.zprofile
+    echo "OpenAI key and chatgpt path added to $HOME_USER/.zprofile"
+    source $HOME_USER/.zprofile
   # zshrc profile for debian
-  elif [ -f ~/.zshrc ]; then
-    echo "export OPENAI_KEY=$key" >>~/.zshrc
+  elif [ -f $HOME_USER/.zshrc ]; then
+    echo "export OPENAI_API_KEY=$key" >>$HOME_USER/.zshrc
+    echo "export OPENAI_API_URI=$uri" >>$HOME_USER/.zshrc
     if [[ ":$PATH:" == *":/usr/local/bin:"* ]]; then
-      echo 'export PATH=$PATH:/usr/local/bin' >>~/.zshrc
+      echo 'export PATH=$PATH:/usr/local/bin' >>$HOME_USER/.zshrc
     fi
-    echo "OpenAI key and chatgpt path added to ~/.zshrc"
-    source ~/.zshrc
+    echo "OpenAI key and chatgpt path added to $HOME_USER/.zshrc"
+    source $HOME_USER/.zshrc
   # bash profile mac
-  elif [ -f ~/.bash_profile ]; then
-    echo "export OPENAI_KEY=$key" >>~/.bash_profile
+  elif [ -f $HOME_USER/.bash_profile ]; then
+    echo "export OPENAI_API_KEY=$key" >>$HOME_USER/.bash_profile
+    echo "export OPENAI_API_URI=$uri" >>$HOME_USER/.bash_profile
     if [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
-      echo 'export PATH=$PATH:/usr/local/bin' >>~/.bash_profile
+      echo 'export PATH=$PATH:/usr/local/bin' >>$HOME_USER/.bash_profile
     fi
-    echo "OpenAI key and chatgpt path added to ~/.bash_profile"
-    source ~/.bash_profile
+    echo "OpenAI key and chatgpt path added to $HOME_USER/.bash_profile"
+    source $HOME_USER/.bash_profile
   # profile ubuntu
-  elif [ -f ~/.profile ]; then
-    echo "export OPENAI_KEY=$key" >>~/.profile
+  elif [ -f $HOME_USER/.profile ]; then
+    echo "export OPENAI_API_KEY=$key" >>$HOME_USER/.profile
+    echo "export OPENAI_API_URI=$uri" >>$HOME_USER/.profile
     if [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
-      echo 'export PATH=$PATH:/usr/local/bin' >>~/.profile
+      echo 'export PATH=$PATH:/usr/local/bin' >>$HOME_USER/.profile
     fi
-    echo "OpenAI key and chatgpt path added to ~/.profile"
-    source ~/.profile
+    echo "OpenAI key and chatgpt path added to $HOME_USER/.profile"
+    source $HOME_USER/.profile
   else
-    export OPENAI_KEY=$key
-    echo "You need to add this to your shell profile: export OPENAI_KEY=$key"
+    export OPENAI_API_KEY=$key
+    echo "You need to add this to your shell profile: export OPENAI_API_KEY=$key"
   fi
   echo "Installation complete"
 
